@@ -1,0 +1,32 @@
+ssh:
+    ssh -i $HOME/.ec2/dibmap1.pem ec2-user@ec2-184-72-242-128.compute-1.amazonaws.com (alias to ssha)
+
+mysql:
+    mysql -u dibmap -p -h dibmapdb.czdjllndzpgp.us-east-1.rds.amazonaws.com (alias to mysqlc)
+
+
+namescheap hosting
+    user: guy0089
+    pasS: reg pass
+
+
+compression:
+    ssh into environment
+    go to /etc/tomcat6
+    edit server.xml
+    change the <Connector.../> to:
+        <Connector URIEncoding="UTF-8" compressableMimeType="text/html,text/xml,text/plain,text/css,text/javascript" 
+                   compression="on" compressionMinSize="300" connectionTimeout="20000" port="8080" protocol="HTTP/1.1" 
+                   redirectPort="8443" />
+
+caching:
+    add CacheControlFilter.java to project
+    modify web.xml for project (check paackage name for CacheControlFilter class):
+        <filter>
+            <filter-name>SetCacheControl</filter-name>
+            <filter-class>filters.CacheControlFilter</filter-class>
+        </filter>                       
+        <filter-mapping>
+            <filter-name>SetCacheControl</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
