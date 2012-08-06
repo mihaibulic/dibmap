@@ -3,11 +3,12 @@ ssh:
 
 mysql:
     mysql -u dibmap -p -h dibmapdb.czdjllndzpgp.us-east-1.rds.amazonaws.com (alias to mysqlc)
-    db url: <param-value>jdbc:dibmapdb.czdjllndzpgp.us-east-1.rds.amazonaws.com:3306/</param-value>
+
 
 namescheap hosting
     user: guy0089
     pasS: reg pass
+
 
 compression:
     ssh into environment
@@ -19,8 +20,8 @@ compression:
                    redirectPort="8443" />
 
 caching:
-    add CacheControlFilter.java to project (REMOVED DURING TESTING)
-    modify web.xml for project (check paackage name for CacheControlFilter class) (DISABLED DURING TESTING):
+    add CacheControlFilter.java to project
+    modify web.xml for project (check paackage name for CacheControlFilter class):
         <filter>
             <filter-name>SetCacheControl</filter-name>
             <filter-class>filters.CacheControlFilter</filter-class>

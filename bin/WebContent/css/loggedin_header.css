@@ -1,0 +1,20 @@
+div 
+{
+	height: 20px;
+	width: 98%;
+}
+
+li.control
+{
+	float: right;
+}
+
+li.link
+{
+	float: left;
+}
+
+li
+{
+	margin: 0 10px;
+}

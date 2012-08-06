@@ -14,8 +14,7 @@ public class CacheControlFilter implements Filter
         HttpServletResponse resp = (HttpServletResponse) response;
         
         resp.setHeader("Last-Modified", modTime);
-        //resp.setHeader("Cache-Control", "public, must-revalidate, max-age="+getSeconds(7));
-        resp.setHeader("Cache-Control", "must-revalidate, max-age=0, no-cache");
+        resp.setHeader("Cache-Control", "public, must-revalidate, max-age=0");
         chain.doFilter(request, resp);
     }
 
@@ -31,5 +30,4 @@ public class CacheControlFilter implements Filter
 	@Override
 	public void init(FilterConfig fc) throws ServletException
 	{}
-
 }

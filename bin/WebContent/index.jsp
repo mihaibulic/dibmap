@@ -17,21 +17,22 @@
 	
 	<script type="text/javascript" src="scripts/load.js"></script>
 	<script type="text/javascript">
-		loadJS(new Array('scripts/jquery-1.7.2.min.js', 'scripts/util.js', 
+		loadJS(new Array('scripts/jquery-1.7.2.min.js', 
+						 'scripts/util.js', 'scripts/hashmap.js', 
 						 'scripts/form.js', 'scripts/index.js'));
 	</script>
 </head>
 <body>
 	<div id="reg_form" >
 		<span id="hint">mouseover fields for hints</span>
-		<form action="Register" method="POST">
-			<input type="text" name="name" id="name" value="Name" 
-				onclick="clearDefault('Name')" onblur="validateNotBlank()" onmouseover="showTooltip('required')" onmousemove="changeTooltipPosition()" onmouseout="hideTooltip()"/>
-			<input type="text" name="email" id="email" value="Email" 
+		<form action="#" method="POST">
+			<input type="text" id="name" value="Name" 
+				onfocus="clearDefault('Name')" onblur="validateNotBlank()" onmouseover="showTooltip('required')" onmousemove="changeTooltipPosition()" onmouseout="hideTooltip()"/>
+			<input type="text" id="email" value="Email" 
 				onfocus="clearDefault('Email')" onblur="validateEmail()" onmouseover="showTooltip('must be a valid address')" onmousemove="changeTooltipPosition()" onmouseout="hideTooltip()"/>
-			<input type="text" name="password" id="password" value="Password" 
+			<input type="text" id="password" value="Password" 
 				onfocus="makePassword()" onblur="validateLength(<%=len%>)" onmouseover="showTooltip('must be at least <%=len %> characters long')" onmousemove="changeTooltipPosition()" onmouseout="hideTooltip()"/>
-			<input type="text" name="description" id="description" value="Description" 
+			<input type="text" id="description" value="Description" 
 				onfocus="clearDefault('Description')" onblur="validateNotBlank()" onmouseover="showTooltip('tell us a bit about yourself')" onmousemove="changeTooltipPosition()" onmouseout="hideTooltip()"/>
 			<input type="submit" id="register" value="Sign up" class="disabled button" disabled="disabled" />
 		</form>

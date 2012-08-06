@@ -3,6 +3,7 @@ USE dibmap;
 CREATE TABLE IF NOT EXISTS parties (
     id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
+    description VARCHAR(255) DEFAULT 'I\'\m new to dibmap.',
     rating FLOAT(2,1) DEFAULT 0,
     raters SMALLINT DEFAULT 0,
     is_individual BOOLEAN DEFAULT 1 NOT NULL,
@@ -25,8 +26,7 @@ CREATE TABLE IF NOT EXISTS community_members (
 
 CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(50) NOT NULL,
-    salt CHAR(64) NOT NULL,
-    pwd_hash CHAR(20) NOT NULL,
+    pwd_hash CHAR(60) NOT NULL,
     party_id INTEGER UNSIGNED NOT NULL,
     confirmed BOOLEAN DEFAULT 0 NOT NULL,
     reg_key CHAR(32) NOT NULL,
@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS activities (
     creator_id INTEGER UNSIGNED NOT NULL, 
     activity_type_id INTEGER UNSIGNED NOT NULL, 
     location_id INTEGER UNSIGNED NOT NULL,
+    description VARCHAR(255),
     intensity TINYINT NOT NULL, 
     
     duration INTEGER UNSIGNED, 
@@ -119,6 +120,7 @@ CREATE TABLE IF NOT EXISTS reviews (
     reviewer_id INTEGER UNSIGNED NOT NULL,
     reviewee_id INTEGER UNSIGNED NOT NULL,
     activity_id INTEGER UNSIGNED NOT NULL,
+    review VARCHAR(255) NOT NULL,
     rating TINYINT UNSIGNED NOT NULL,
     reviewed_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 
@@ -134,6 +136,7 @@ CREATE TABLE IF NOT EXISTS messages (
     sender_id INTEGER UNSIGNED NOT NULL,
     depth SMALLINT UNSIGNED NOT NULL,
     sent_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    body VARCHAR(255) NOT NULL,
 
     PRIMARY KEY(id),
     FOREIGN KEY(activity_id) REFERENCES activities(id) ON DELETE NO ACTION,

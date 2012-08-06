@@ -60,7 +60,7 @@ var errors = 0;
 var validMap = new Array();
 function registerInput(id)
 {
-	errors++; 
+	errors++;
 	validMap[id] = false;
 }
 
@@ -80,7 +80,7 @@ function setValidity(element, isValid)
 	
 	if(!wasValid && isValid) errors--; // fixed an error
 	else if(wasValid && !isValid) errors++; // created an error
-
+	
 	validateForm();
 	
 	return isValid;
