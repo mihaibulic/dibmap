@@ -1,0 +1,342 @@
+-- MySQL dump 10.13  Distrib 5.5.24, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: dibmap
+-- ------------------------------------------------------
+-- Server version	5.5.24-0ubuntu0.12.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `activities`
+--
+
+DROP TABLE IF EXISTS `activities`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `activities` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `creator_id` int(10) unsigned NOT NULL,
+  `activity_type_id` int(10) unsigned NOT NULL,
+  `location_id` int(10) unsigned NOT NULL,
+  `intensity` tinyint(4) NOT NULL,
+  `duration` int(10) unsigned DEFAULT NULL,
+  `specific_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `general_time_monday_morning` tinyint(1) DEFAULT '0',
+  `general_time_monday_afternoon` tinyint(1) DEFAULT '0',
+  `general_time_monday_evening` tinyint(1) DEFAULT '0',
+  `general_time_monday_night` tinyint(1) DEFAULT '0',
+  `general_time_tuesday_morning` tinyint(1) DEFAULT '0',
+  `general_time_tuesday_afternoon` tinyint(1) DEFAULT '0',
+  `general_time_tuesday_evening` tinyint(1) DEFAULT '0',
+  `general_time_tuesday_night` tinyint(1) DEFAULT '0',
+  `general_time_wednesday_morning` tinyint(1) DEFAULT '0',
+  `general_time_wednesday_afternoon` tinyint(1) DEFAULT '0',
+  `general_time_wednesday_evening` tinyint(1) DEFAULT '0',
+  `general_time_wednesday_night` tinyint(1) DEFAULT '0',
+  `general_time_thursday_morning` tinyint(1) DEFAULT '0',
+  `general_time_thursday_afternoon` tinyint(1) DEFAULT '0',
+  `general_time_thursday_evening` tinyint(1) DEFAULT '0',
+  `general_time_thursday_night` tinyint(1) DEFAULT '0',
+  `general_time_friday_morning` tinyint(1) DEFAULT '0',
+  `general_time_friday_afternoon` tinyint(1) DEFAULT '0',
+  `general_time_friday_evening` tinyint(1) DEFAULT '0',
+  `general_time_friday_night` tinyint(1) DEFAULT '0',
+  `general_time_saturday_morning` tinyint(1) DEFAULT '0',
+  `general_time_saturday_afternoon` tinyint(1) DEFAULT '0',
+  `general_time_saturday_evening` tinyint(1) DEFAULT '0',
+  `general_time_saturday_night` tinyint(1) DEFAULT '0',
+  `general_time_sunday_morning` tinyint(1) DEFAULT '0',
+  `general_time_sunday_afternoon` tinyint(1) DEFAULT '0',
+  `general_time_sunday_evening` tinyint(1) DEFAULT '0',
+  `general_time_sunday_night` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `creator_id` (`creator_id`),
+  KEY `activity_type_id` (`activity_type_id`),
+  KEY `location_id` (`location_id`),
+  CONSTRAINT `activities_ibfk_1` FOREIGN KEY (`creator_id`) REFERENCES `parties` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `activities_ibfk_2` FOREIGN KEY (`activity_type_id`) REFERENCES `activity_types` (`id`),
+  CONSTRAINT `activities_ibfk_3` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `activities`
+--
+
+LOCK TABLES `activities` WRITE;
+/*!40000 ALTER TABLE `activities` DISABLE KEYS */;
+/*!40000 ALTER TABLE `activities` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `activity_attendees`
+--
+
+DROP TABLE IF EXISTS `activity_attendees`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `activity_attendees` (
+  `activity_id` int(10) unsigned NOT NULL,
+  `attendee_id` int(10) unsigned NOT NULL,
+  `rsvp_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`activity_id`,`attendee_id`),
+  KEY `attendee_id` (`attendee_id`),
+  CONSTRAINT `activity_attendees_ibfk_1` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `activity_attendees_ibfk_2` FOREIGN KEY (`attendee_id`) REFERENCES `parties` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `activity_attendees`
+--
+
+LOCK TABLES `activity_attendees` WRITE;
+/*!40000 ALTER TABLE `activity_attendees` DISABLE KEYS */;
+/*!40000 ALTER TABLE `activity_attendees` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `activity_types`
+--
+
+DROP TABLE IF EXISTS `activity_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `activity_types` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `parent` int(10) unsigned DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `parent` (`parent`),
+  CONSTRAINT `activity_types_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `activity_types` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `activity_types`
+--
+
+LOCK TABLES `activity_types` WRITE;
+/*!40000 ALTER TABLE `activity_types` DISABLE KEYS */;
+/*!40000 ALTER TABLE `activity_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `community_members`
+--
+
+DROP TABLE IF EXISTS `community_members`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `community_members` (
+  `member_id` int(10) unsigned NOT NULL,
+  `community_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`member_id`,`community_id`),
+  KEY `community_id` (`community_id`),
+  CONSTRAINT `community_members_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `parties` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `community_members_ibfk_2` FOREIGN KEY (`community_id`) REFERENCES `parties` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `community_members`
+--
+
+LOCK TABLES `community_members` WRITE;
+/*!40000 ALTER TABLE `community_members` DISABLE KEYS */;
+/*!40000 ALTER TABLE `community_members` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `locations`
+--
+
+DROP TABLE IF EXISTS `locations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `locations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `longitude` float DEFAULT NULL,
+  `latitude` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `locations`
+--
+
+LOCK TABLES `locations` WRITE;
+/*!40000 ALTER TABLE `locations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `locations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `message_receivers`
+--
+
+DROP TABLE IF EXISTS `message_receivers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message_receivers` (
+  `message_id` int(10) unsigned NOT NULL,
+  `receiver_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`message_id`,`receiver_id`),
+  KEY `receiver_id` (`receiver_id`),
+  CONSTRAINT `message_receivers_ibfk_1` FOREIGN KEY (`message_id`) REFERENCES `messages` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `message_receivers_ibfk_2` FOREIGN KEY (`receiver_id`) REFERENCES `parties` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `message_receivers`
+--
+
+LOCK TABLES `message_receivers` WRITE;
+/*!40000 ALTER TABLE `message_receivers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `message_receivers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `messages`
+--
+
+DROP TABLE IF EXISTS `messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `messages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `activity_id` int(10) unsigned NOT NULL,
+  `sender_id` int(10) unsigned NOT NULL,
+  `depth` smallint(5) unsigned NOT NULL,
+  `sent_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `activity_id` (`activity_id`),
+  KEY `sender_id` (`sender_id`),
+  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`) ON DELETE NO ACTION,
+  CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`sender_id`) REFERENCES `parties` (`id`) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `messages`
+--
+
+LOCK TABLES `messages` WRITE;
+/*!40000 ALTER TABLE `messages` DISABLE KEYS */;
+/*!40000 ALTER TABLE `messages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `parties`
+--
+
+DROP TABLE IF EXISTS `parties`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `parties` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `rating` float(2,1) DEFAULT '0.0',
+  `raters` smallint(6) DEFAULT '0',
+  `is_individual` tinyint(1) NOT NULL DEFAULT '1',
+  `owner` int(10) unsigned DEFAULT NULL,
+  `last_logon_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `creation_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `owner` (`owner`),
+  CONSTRAINT `parties_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `parties` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `parties`
+--
+
+LOCK TABLES `parties` WRITE;
+/*!40000 ALTER TABLE `parties` DISABLE KEYS */;
+INSERT INTO `parties` VALUES (1,'mihaiA',0.0,0,1,NULL,'0000-00-00 00:00:00','2012-08-06 07:58:15'),(2,'test',0.0,0,1,NULL,'0000-00-00 00:00:00','2012-08-06 08:19:59'),(3,'mihai',0.0,0,1,NULL,'0000-00-00 00:00:00','2012-08-07 08:14:49'),(4,'mihai bulic',0.0,0,1,NULL,'0000-00-00 00:00:00','2012-08-07 08:15:09'),(5,'test',0.0,0,1,NULL,'0000-00-00 00:00:00','2012-08-07 08:18:22'),(6,'test',0.0,0,1,NULL,'0000-00-00 00:00:00','2012-08-07 08:19:32'),(7,'asdfasd',0.0,0,1,NULL,'0000-00-00 00:00:00','2012-08-07 08:21:01'),(8,'jon',0.0,0,1,NULL,'0000-00-00 00:00:00','2012-08-07 08:22:50'),(9,'mouse',0.0,0,1,NULL,'0000-00-00 00:00:00','2012-08-07 08:28:19'),(10,'paco',0.0,0,1,NULL,'0000-00-00 00:00:00','2012-08-07 08:32:02'),(11,'testing',0.0,0,1,NULL,'0000-00-00 00:00:00','2012-08-07 08:38:18');
+/*!40000 ALTER TABLE `parties` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reviews`
+--
+
+DROP TABLE IF EXISTS `reviews`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reviews` (
+  `reviewer_id` int(10) unsigned NOT NULL,
+  `reviewee_id` int(10) unsigned NOT NULL,
+  `activity_id` int(10) unsigned NOT NULL,
+  `rating` tinyint(3) unsigned NOT NULL,
+  `reviewed_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`reviewer_id`,`reviewee_id`,`activity_id`),
+  KEY `reviewee_id` (`reviewee_id`),
+  KEY `activity_id` (`activity_id`),
+  CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`reviewer_id`) REFERENCES `parties` (`id`) ON DELETE NO ACTION,
+  CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`reviewee_id`) REFERENCES `parties` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `reviews_ibfk_3` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reviews`
+--
+
+LOCK TABLES `reviews` WRITE;
+/*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `email` varchar(50) NOT NULL,
+  `salt` char(64) NOT NULL,
+  `pwd_hash` char(20) NOT NULL,
+  `party_id` int(10) unsigned NOT NULL,
+  `confirmed` tinyint(1) NOT NULL DEFAULT '0',
+  `reg_key` char(32) NOT NULL,
+  PRIMARY KEY (`email`),
+  UNIQUE KEY `party_id` (`party_id`),
+  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`party_id`) REFERENCES `parties` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('m.ihaibulic@gmail.com','1344328099544sbcspilgzensrwwxvmqascwwavzuetiprjamloiskofmkmlqhph','•é0øÝHzF)UlOÿp9çÈ±\n',9,0,'1344328099584dovfckpbtdnkfbvwmsi'),('mi.h.aibulic@gmail.com','1344328698219bbwtfczvplpfoaeuwyrvlfhfdyqhczcawfxanuqwlxybmckdyzp','Ù[’2Æ…éü‡#FgÔÙ‚ï',11,0,'1344328698253txblomuwqwcyvzwutdf'),('mi.haibulic@gmail.com','1344328322817tbhtlywkllflnnmrhlqwjxjavrtnnkrcgbsoewfkksidzetnzqt','t+N}\0rÞc­ôR ¡Æo·jåK',10,0,'1344328322861anfvllssinbxasvzsot'),('mih.aibulic@gmail.com','1344327661542bsconfriovuxspjjueefpfjigqntckzlvnqwrptsibardhgoenu','*ïõrs\Z¥ß§Ã¶×ñtš˜¬¢Õ',7,0,'1344327661579trylhpbxykisjvwujhn'),('mihai.bulic@gmail.com','1344327502576lqmjekkrjevzzlgdpxvreoglokhhtvxbeydvkivwspishxdafii','N<¾\'ÿ*¥\"w1Í1mR%Ë`Èb!',5,0,'1344327502609gnjbmvqcpgvlomwgrtn'),('mihai@bulic.com','1344241199199yqgpucxbjsneuyaunktgxcicawinphlfhxexhucdeifsnvlafqp',')ìSÏÕ/èÔËÕMõË]›.~þ',2,0,'1344241199238djhaabcipmmcfqgncpg'),('mihai@fake.com','1344239895438kevdmvrltbntithqnvxoumisxioqvcnixmveiwrihyyxiphrojk','U,´Š>qLN>ÃÌÒ”ÏØ,Î',1,0,'1344239895453nvnxlgwtjkoltnlwomj'),('mihai@tit.com','1344327289922mvsukxizltjlgadzdopjsgknxekrypvpettnkuvxegdduisxutw','~.I\"œNÛŸ(ø[\"jÄ)ÏÉ…í',3,0,'1344327289969lwtcjvqabparngafkay'),('mihaib.ulic@gmail.com','1344327572266nqqpqnzfcdkgdudxumktajywxqlzgffpukoxaffbvecuoougkfo','ÑDm-…Ýh?\'Ù&[G?Í)Á',6,0,'1344327572301eyenmcckotiunjbqsol'),('mihaibuli.c@gmail.com','1344327770705jsfziafqnfvuokydsrjurgestqjugajynekwovcydgxzmxidqny','\'ÅiÛŸwœá!í\n¼²¥£',8,0,'1344327770748jlkzdtofppkwszktoad'),('mihaibulic@gmail.com','1344327309298vgruufumcdzswcdbwqcndmguwouqwspvdiqniytnzcibepsezby','‡@?¥ƒFÌp%²íVðoÿ*²',4,0,'1344327309319eenfwybmvikadntzmks');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2012-08-07  2:00:30
