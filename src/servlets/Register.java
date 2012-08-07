@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import util.DB;
 import util.FileIO;
+import util.MailSender;
 import util.Validation;
 
 public class Register extends HttpServlet 
@@ -99,6 +101,19 @@ public class Register extends HttpServlet
 						FileIO output = new FileIO(new File(root + File.separator + "parties" + 
 															File.separator + partyId + ".desc"));
 						success = output.write(description);
+						
+						if(success)
+						{
+							ServletContext sc = this.getServletContext();
+							MailSender ms = new MailSender(sc);
+							
+							String body = "Welcome to dibmap " + name + 
+									"!  Click on the link below to confirm your registration:\n\n\t"+
+									sc.getInitParameter("url") + "/" + sc.getInitParameter("confirm") + "/" + regKey;
+							
+							ms.sendEmail(email, "dibmap confirmation", body);
+							System.out.println("email sent");
+						}
 					}
 				}
 			}

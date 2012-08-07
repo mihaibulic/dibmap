@@ -32,6 +32,26 @@
     <param-name>dbPass</param-name>
     <param-value>dibmapdb</param-value>
   </context-param>
+  <context-param>
+    <param-name>aws_key_id</param-name>
+    <param-value>AKIAJU6WZLSBNTHEUFKQ</param-value>
+  </context-param>
+  <context-param>
+    <param-name>aws_secret_key</param-name>
+    <param-value>vx9UwnkxecLc1uxyOK6AoCQWv9kzp/XwPPLGgkfq</param-value>
+  </context-param>
+  <context-param>
+    <param-name>default_email</param-name>
+    <param-value>noreply@dibmap.com</param-value>
+  </context-param>
+  <context-param>
+    <param-name>url</param-name>
+    <param-value>www.dibmap.com</param-value>
+  </context-param>
+  <context-param>
+    <param-name>confirm</param-name>
+    <param-value>Confirm</param-value>
+  </context-param>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -83,5 +103,15 @@
   <servlet-mapping>
     <servlet-name>Register</servlet-name>
     <url-pattern>/Register</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EmailSender</display-name>
+    <servlet-name>EmailSender</servlet-name>
+    <servlet-class>servlets.EmailSender</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmailSender</servlet-name>
+    <url-pattern>/EmailSender</url-pattern>
   </servlet-mapping>
 </web-app>
