@@ -1,6 +1,8 @@
 #!/bin/bash
 
-mysqldump -u root dibmap > "db/$(date +%d%m-%H%M).mysql.backup"
+hash=$(git rev-parse --verify HEAD)
+time=$(date +%d%m-%H%M)
+mysqldump -u root dibmap > "db/${time}.${hash}.mysql.backup"
 
 git add --all
 git commit -a -m "$@"
