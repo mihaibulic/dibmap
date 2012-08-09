@@ -4,6 +4,7 @@ ssh:
 mysql:
     mysql -u dibmap -p -h dibmapdb.czdjllndzpgp.us-east-1.rds.amazonaws.com (alias to mysqlc)
     db url: <param-value>jdbc:dibmapdb.czdjllndzpgp.us-east-1.rds.amazonaws.com:3306/</param-value>
+    backups are created on each commit and stored under db directory. the naming scheme is: <month><day>-<git hash for commit>.mysql.backup
 
 namescheap hosting
     user: guy0089

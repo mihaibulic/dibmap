@@ -72,10 +72,7 @@ public class EmailValidator extends HttpServlet
 		{
 			e.printStackTrace();
 		}
-		finally
-		{
-			db.closeConnection(conn, stmt, rs);
-		}
+		db.closeConnection(conn, stmt, rs);
 		
 		return available;
 	}

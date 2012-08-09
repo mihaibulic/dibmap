@@ -5,9 +5,47 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+// <% if(!Validation.isLoggedIn(session)) request.follow("Index"); %>
+
 public class Validation
 {
-	private boolean verify(String pw, byte[] correctHash, String salt) throws NoSuchAlgorithmException, UnsupportedEncodingException
+	public static void inValidate(HttpServletRequest request)
+	{
+		inValidate(request.getSession(false));
+	}
+
+	public static void inValidate(HttpSession session)
+	{
+		if(session != null)
+		{
+			session.invalidate();
+		}
+	}
+	
+	public static boolean isLoggedIn(HttpServletRequest request)
+	{
+		return isLoggedIn(request.getSession(false));
+	}
+	
+	public static boolean isLoggedIn(HttpSession session)
+	{
+		boolean isLoggedIn = false;
+		if(session != null)
+		{
+			String logged = (String)session.getAttribute("logged");
+			if(logged != null && logged.equals("in"))
+			{
+				isLoggedIn = true;
+			}
+		}
+		
+		return isLoggedIn;
+	}
+	
+	public static boolean verify(String pw, byte[] correctHash, String salt) throws NoSuchAlgorithmException, UnsupportedEncodingException
 	{
 		try
 		{

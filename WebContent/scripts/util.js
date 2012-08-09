@@ -25,7 +25,8 @@ var last = -1;
 function getButtonClass()
 {
 	last = (last+1)%colors.length;
-	return colors[last] + " button";
+	//return colors[last] + " button";
+	return "red button";
 }
 
 //tooltip stuff

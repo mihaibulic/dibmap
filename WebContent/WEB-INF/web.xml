@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>dibmap</display-name>
+  
+  <welcome-file-list>
+    <welcome-file>/index.jsp</welcome-file>
+  </welcome-file-list>
+  
   <listener>
     <listener-class>util.Initializer</listener-class>
   </listener>
+  
   <context-param>
     <param-name>passwordLength</param-name>
     <param-value>6</param-value>
@@ -52,24 +58,7 @@
     <param-name>confirm</param-name>
     <param-value>Confirm</param-value>
   </context-param>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
-  <servlet>
-    <description></description>
-    <display-name>EmailValidator</display-name>
-    <servlet-name>EmailValidator</servlet-name>
-    <servlet-class>servlets.EmailValidator</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EmailValidator</servlet-name>
-    <url-pattern>/EmailValidator</url-pattern>
-  </servlet-mapping>
+ 
   <error-page>
     <exception-type>java.lang.Exception</exception-type>
     <location>/errors/javaException.jsp</location>
@@ -86,6 +75,7 @@
     <error-code>500</error-code>
     <location>/errors/500.jsp</location>
   </error-page>
+  
   <filter>
     <filter-name>SetCacheControl</filter-name>
     <filter-class>filters.CacheControlFilter</filter-class>
@@ -94,6 +84,26 @@
     <filter-name>SetCacheControl</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <filter>
+    <display-name>LoginFilter</display-name>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>filters.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>EmailValidator</display-name>
+    <servlet-name>EmailValidator</servlet-name>
+    <servlet-class>servlets.EmailValidator</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmailValidator</servlet-name>
+    <url-pattern>/EmailValidator</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>Register</display-name>
@@ -113,5 +123,45 @@
   <servlet-mapping>
     <servlet-name>EmailSender</servlet-name>
     <url-pattern>/EmailSender</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Confirm</display-name>
+    <servlet-name>Confirm</servlet-name>
+    <servlet-class>servlets.Confirm</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Confirm</servlet-name>
+    <url-pattern>/Confirm</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Login</display-name>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>servlets.Login</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/Login</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Index</display-name>
+    <servlet-name>Index</servlet-name>
+    <servlet-class>servlets.Index</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Index</servlet-name>
+    <url-pattern>/Index</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Logout</display-name>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>servlets.Logout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/Logout</url-pattern>
   </servlet-mapping>
 </web-app>

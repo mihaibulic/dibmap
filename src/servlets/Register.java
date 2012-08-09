@@ -109,7 +109,8 @@ public class Register extends HttpServlet
 							
 							String body = "Welcome to dibmap " + name + 
 									"!  Click on the link below to confirm your registration:\n\n\t"+
-									sc.getInitParameter("url") + "/" + sc.getInitParameter("confirm") + "/" + regKey;
+									sc.getInitParameter("url") + "/" + sc.getInitParameter("confirm") + 
+									"?key=" + regKey + "&email=" + email;
 							
 							ms.sendEmail(email, "dibmap confirmation", body);
 							System.out.println("email sent");

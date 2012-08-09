@@ -23,12 +23,17 @@ public class FileIO
 	
 	public boolean write(String msg)
 	{
+		return write(msg, false);
+	}
+	
+	public boolean write(String msg, boolean append)
+	{
         //try to make a filewriter, if an exception is caught the method stops
 		boolean success = true;
         FileWriter f = null;
         try
         {
-            f = new FileWriter(file, false); // do not append
+            f = new FileWriter(file, append); // do not append
             BufferedWriter out = new BufferedWriter(f);
             
             try
