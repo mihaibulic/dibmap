@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>dibmap</display-name>
-  
   <welcome-file-list>
-    <welcome-file>/index.jsp</welcome-file>
+    <welcome-file>/home/index.jsp</welcome-file>
   </welcome-file-list>
-  
   <listener>
-    <listener-class>util.Initializer</listener-class>
+    <listener-class>com.dibmap.util.Initializer</listener-class>
   </listener>
-  
-  <context-param>
-    <param-name>passwordLength</param-name>
-    <param-value>6</param-value>
-  </context-param>
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
   <context-param>
     <param-name>root</param-name>
     <param-value>/home/mihai/Workspaces/dibmap</param-value>
@@ -56,9 +52,8 @@
   </context-param>
   <context-param>
     <param-name>confirm</param-name>
-    <param-value>Confirm</param-value>
+    <param-value>/open/create/Confirm</param-value>
   </context-param>
- 
   <error-page>
     <exception-type>java.lang.Exception</exception-type>
     <location>/errors/javaException.jsp</location>
@@ -68,6 +63,10 @@
     <location>/errors/mysqlError.jsp</location>
   </error-page>
   <error-page>
+    <error-code>401</error-code>
+    <location>/errors/401.jsp</location>
+  </error-page>
+  <error-page>
     <error-code>404</error-code>
     <location>/errors/404.jsp</location>
   </error-page>
@@ -75,93 +74,81 @@
     <error-code>500</error-code>
     <location>/errors/500.jsp</location>
   </error-page>
-  
   <filter>
-    <filter-name>SetCacheControl</filter-name>
-    <filter-class>filters.CacheControlFilter</filter-class>
+    <filter-name>CacheControlFilter</filter-name>
+    <filter-class>com.dibmap.filters.CacheControlFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>SetCacheControl</filter-name>
-    <url-pattern>/*</url-pattern>
+    <filter-name>CacheControlFilter</filter-name>
+    <url-pattern>*</url-pattern>
   </filter-mapping>
   <filter>
     <display-name>LoginFilter</display-name>
     <filter-name>LoginFilter</filter-name>
-    <filter-class>filters.LoginFilter</filter-class>
+    <filter-class>com.dibmap.filters.LoginFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>LoginFilter</filter-name>
-    <url-pattern>*.jsp</url-pattern>
+    <url-pattern>*</url-pattern>
   </filter-mapping>
-  
-  <servlet>
-    <description></description>
-    <display-name>EmailValidator</display-name>
-    <servlet-name>EmailValidator</servlet-name>
-    <servlet-class>servlets.EmailValidator</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EmailValidator</servlet-name>
-    <url-pattern>/EmailValidator</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>Register</display-name>
-    <servlet-name>Register</servlet-name>
-    <servlet-class>servlets.Register</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Register</servlet-name>
-    <url-pattern>/Register</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>EmailSender</display-name>
-    <servlet-name>EmailSender</servlet-name>
-    <servlet-class>servlets.EmailSender</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EmailSender</servlet-name>
-    <url-pattern>/EmailSender</url-pattern>
-  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>Confirm</display-name>
     <servlet-name>Confirm</servlet-name>
-    <servlet-class>servlets.Confirm</servlet-class>
+    <servlet-class>com.dibmap.controllers.create.Confirm</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Confirm</servlet-name>
-    <url-pattern>/Confirm</url-pattern>
+    <url-pattern>/open/create/Confirm</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EmailValidator</display-name>
+    <servlet-name>EmailValidator</servlet-name>
+    <servlet-class>com.dibmap.controllers.create.EmailValidator</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmailValidator</servlet-name>
+    <url-pattern>/open/create/EmailValidator</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Account</display-name>
+    <servlet-name>Account</servlet-name>
+    <servlet-class>com.dibmap.controllers.create.Account</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Account</servlet-name>
+    <url-pattern>/open/create/Account</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>Login</display-name>
     <servlet-name>Login</servlet-name>
-    <servlet-class>servlets.Login</servlet-class>
+    <servlet-class>com.dibmap.controllers.home.Login</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
-    <url-pattern>/Login</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>Index</display-name>
-    <servlet-name>Index</servlet-name>
-    <servlet-class>servlets.Index</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Index</servlet-name>
-    <url-pattern>/Index</url-pattern>
+    <url-pattern>/open/home/Login</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>Logout</display-name>
     <servlet-name>Logout</servlet-name>
-    <servlet-class>servlets.Logout</servlet-class>
+    <servlet-class>com.dibmap.controllers.home.Logout</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Logout</servlet-name>
-    <url-pattern>/Logout</url-pattern>
+    <url-pattern>/home/Logout</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Activity</display-name>
+    <servlet-name>Activity</servlet-name>
+    <servlet-class>com.dibmap.controllers.create.Activity</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Activity</servlet-name>
+    <url-pattern>/Activity</url-pattern>
   </servlet-mapping>
 </web-app>

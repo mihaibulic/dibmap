@@ -20,13 +20,13 @@ function getRequest()
 	return request;
 }
 
-var colors = new Array('red', 'blue', 'green', 'yellow');
+var colors = new Array('green', 'red', 'blue', 'yellow');
 var last = -1;
 function getButtonClass()
 {
 	last = (last+1)%colors.length;
 	//return colors[last] + " button";
-	return "red button";
+	return "green button";
 }
 
 //tooltip stuff

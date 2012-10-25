@@ -1,0 +1,20 @@
+#header
+{
+	height: 20px;
+	width: 98%;
+}
+
+#header_shortcut, #header_control
+{
+	margin: 0 10px;
+}
+
+#header_control
+{
+	float: right;
+}
+
+#header_shortcut
+{
+	float: left;
+}

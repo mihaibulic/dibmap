@@ -1,0 +1,38 @@
+#welcome 
+{
+	height: 150px;
+	width: 98%;
+}
+
+#welcome_logo
+{
+	float: left;
+	padding-top: 5px;
+	margin:5px 70px;
+}
+
+#welcome_form
+{
+	float: right;
+}
+
+#welcome_table
+{
+	float:right; 
+	margin:35px 100px
+}
+
+#login_email
+{
+	width: 300px;
+}
+
+#login_password
+{
+	width: 175px;
+}
+
+#login_button
+{
+	width: 120px;
+}

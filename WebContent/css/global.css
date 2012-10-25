@@ -36,7 +36,7 @@ h5
 h6
 {
 	font-size: 15px;
-	padding: 5px 0;
+	padding: 5px 1px;
 }
 
 input
@@ -63,7 +63,7 @@ input:focus
 	border: 2px outset;
 	border-radius: 5px;
 	font-size: 16px;
-	padding: 0px 10px;
+	padding: 1px 10px;
 	display: inline-block;
 	text-decoration: none;
 }

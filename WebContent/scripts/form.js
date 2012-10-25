@@ -1,125 +1,141 @@
-//this file needs util.js
-
-function handleEmailValidationResponse()
+function Form(submitId)
 {
-	if(emailValidationRequest.readyState == 4 && emailValidationRequest.status == 200)
+	this.submit = document.getElementById(submitId);
+	this.errors = 0;
+	this.inputs = new Array();
+
+	this.setButton = function(id)
 	{
-		var validEmail;
-		if(emailValidationRequest.responseText === "used")
+		this.submit = document.getElementById(id);
+	};
+	
+	this.addInput = function(id, tooltipMsg, type)
+	{
+		this.errors++;
+		this.inputs[id] = false;
+
+		var element = document.getElementById(id);
+		var defValue = element.value;
+		var _this = this;
+		
+		var click = function()
 		{
-			document.getElementById("content").innerHTML = "That email address is already registered";
-			validEmail = false;
-		}
-		else if(emailValidationRequest.responseText === "invalid")
+			switch(type)
+			{
+				case "Password":
+					_this.makePassword(element);
+					break;
+				default:
+					_this.clearDefault(element, defValue);
+			}
+		};
+		element.addEventListener("focusin", click, false);
+
+		if(type.length > 0)
 		{
-			document.getElementById("content").innerHTML = "That email address is invalid";
-			validEmail = false;
-		}
-		else //good
-		{
-			document.getElementById("content").innerHTML = "Available";
-			validEmail = true;
+			var validate = function()
+			{
+				switch(type)
+				{
+					case "NotBlank":
+						_this.validateNotBlank(element);
+						break;
+					case "Email":
+						_this.validateEmail(element);
+						break;
+					case "Password":
+						_this.validatePassword(element);
+						break;
+				}
+				
+				_this.resetDefault(element, defValue);
+			};
+			
+			element.addEventListener("focusout", validate, false);
 		}
 		
-		setValidity(document.getElementById("email"), validEmail);
-	}
-}
-
-var emailValidationRequest = null;
-function makeEmailValidationRequest()
-{
-	emailValidationRequest = getRequest();
-	if(emailValidationRequest)
-	{
-		var email = document.getElementById("email").value;
-		emailValidationRequest.onreadystatechange = handleEmailValidationResponse;
-		emailValidationRequest.open("POST", "EmailValidator", true);
-		emailValidationRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		emailValidationRequest.send("email="+email);
-	}
-}
-
-function clearDefault(defValue)
-{
-	var element = document.getElementById(event.target.id);
+		if(tooltipMsg.length > 0)
+		{
+			element.addEventListener("mouseover", function(){showTooltip(tooltipMsg);}, false);
+			element.addEventListener("mousemove", function(){changeTooltipPosition();}, false);
+			element.addEventListener("mouseout", function(){hideTooltip();}, false);
+		}
+	};
 	
-	if(element.value === defValue)
+	this.clearDefault = function(element, defValue)
+	{
+		if(element.value === defValue)
+		{
+			element.value = "";
+		}
+	};
+	
+	this.resetDefault = function(element, defValue)
+	{
+		if(element.value === "")
+		{
+			element.value = defValue;
+			element.type = "text";
+		}
+	};
+
+	this.makePassword = function(element)
 	{
 		element.value = "";
-	}
-}
-
-function makePassword()
-{
-	var element = document.getElementById(event.target.id);
-	element.value = "";
-    element.type = "password";
-}
-
-var errors = 0;
-var validMap = new Array();
-function registerInput(id)
-{
-	errors++; 
-	validMap[id] = false;
-}
-
-function setValidity(element, isValid)
-{
-	var wasValid = validMap[element.id]; // green 
-	validMap[element.id] = isValid;
+	    element.type = "password";
+	};
 	
-	if (isValid)
-    {
-		element.style.borderColor = '#0F0'; // green
-    }
-    else
+	this.validateNotBlank = function(element)
 	{
-    	element.style.borderColor = '#F00';// red
-	}
+	    this.setValidity(element, element.value !== null && element.value !== "");
+	};
 	
-	if(!wasValid && isValid) errors--; // fixed an error
-	else if(wasValid && !isValid) errors++; // created an error
-
-	validateForm();
+	this.validatePassword = function(element)
+	{
+		this.setValidity(element, element.value.length >= 6);
+	};
 	
-	return isValid;
-}
-
-function validateNotBlank()
-{
-    var element=document.getElementById(event.target.id);
-    setValidity(element, element.value !== null && element.value !== "");
-}    
-
-function validateEmail()
-{
-	var pattern = "^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}$";
-	var element=document.getElementById(event.target.id);
-
-	if(setValidity(element, element.value.match(pattern)))
+	this.validateEmail = function(element)
 	{
-		document.getElementById("content").innerHTML = "Checking email availability...";
-		makeEmailValidationRequest();
-	}
+		var pattern = "^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}$";
+
+		this.setValidity(element, element.value.match(pattern));
+	};
+	
+	this.setValidity = function(element, isValid)
+	{
+		var wasValid = this.inputs[element.id]; // green 
+		this.inputs[element.id] = isValid;
+		
+		if (isValid)
+	    {
+			element.style.borderColor = '#0F0'; // green
+	    }
+	    else
+		{
+	    	element.style.borderColor = '#F00';// red
+		}
+		
+		if(!wasValid && isValid) this.errors--; // fixed an error
+		else if(wasValid && !isValid) this.errors++; // created an error
+
+		this.validateForm();
+		
+		return isValid;
+	};
+	
+	this.validateForm = function()
+	{
+		if(this.errors === 0)
+		{
+			this.submit.disabled = "";
+			this.submit.className = getButtonClass();
+		}
+		else
+		{
+			this.submit.disabled = "disabled";
+			this.submit.className = "disabled button";
+		}
+	};
 }
 
-function validateLength(len)
-{
-	var element=document.getElementById(event.target.id);
-	setValidity(element, element.value.length >= len);
-}
-
-function validateForm()
-{
-	if(errors === 0)
-	{
-		document.getElementById("register").disabled = "";
-		document.getElementById("register").className = getButtonClass();
-	}
-	else
-	{
-		document.getElementById("register").disabled = "disabled";
-		document.getElementById("register").className = "disabled button";
-	}
-}

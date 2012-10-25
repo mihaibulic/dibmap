@@ -1,3 +1,6 @@
+session persist:
+    uncomment <Manager pathname="" /> in context.xml
+
 ssh:
     ssh -i $HOME/.ec2/dibmap1.pem ec2-user@ec2-184-72-242-128.compute-1.amazonaws.com (alias to ssha)
 
