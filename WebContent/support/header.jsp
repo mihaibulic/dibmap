@@ -2,15 +2,13 @@
 
 <div id="header" class="visible">
     <ul>
-        <li id="header_shortcut" class="link">Hello, ${session.name}</li>
-        <li id="header_shortcut" class="link"><a class="plain" href="#">Search</a></li>
-        <li id="header_shortcut" class="link"><a class="plain" href="#">Create Activity</a></li>
-        <li id="header_shortcut" class="link"><a class="plain" href="#">Inbox</a></li>
-        <li id="header_shortcut" class="link"><a class="plain" href="#">Calendar</a></li>
-        <li id="header_shortcut" class="link"><a class="plain" href="#">Reviews</a></li>
-    </ul>
-    <ul>
-        <li id="header_control" class="control"><a class="plain" href="/home/Logout">Logout</a></li>
-        <li id="header_control" class="control"><a class="plain" href="#">Settings</a></li>
+        <li class="header_shortcut link"><strong>Hello, ${session.name}</strong></li>
+        <li class="header_shortcut link"><a class="plain" href="#">Search</a></li>
+        <li class="header_shortcut link"><a class="plain" href="#">Create Activity</a></li>
+        <li class="header_shortcut link"><a class="plain" href="#">Inbox</a></li>
+        <li class="header_shortcut link"><a class="plain" href="#">Calendar</a></li>
+        <li class="header_shortcut link"><a class="plain" href="#">Reviews</a></li>
+        <li class="header_control link"><a class="plain" href="/home/Logout">Logout</a></li>
+        <li class="header_control link"><a class="plain" href="#">Settings</a></li>
     </ul>
 </div>
